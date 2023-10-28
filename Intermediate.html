@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Intermediate</title>
+    <style>
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f6f8fa; /* GitHub-like background color */
+            color: #333; /* Text color */
+        }
+
+        h1 {
+            font-size: 36px;
+            color: white; /* Make sure to use a color code or name, e.g., #fff for white */
+            background-color: black;
+            text-align: center;
+            font-weight: bold;
+            font-family: Arial, sans-serif; /* Use a valid font family name */
+            padding: 20px;
+            border-radius: 5px;
+            border: 5px solid #c9d1d9;
+            margin-top: 2px;
+        }
+
+        /* CSS styles for the practice text area */
+        #user-input {
+            width: 100%;
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            background-color: #f6f8fa;
+            color: #333;
+            border-radius: 5px;
+        }
+
+        /* Main content container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            background-color: #fff; /* Content background color */
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+            border-radius: 5px; /* Rounded corners */
+        }
+
+        /* CSS styles for the sentence container */
+        #sentence-container {
+            margin-top: 20px;
+        }
+
+        #sentence-container p {
+            font-size: 20px;
+            line-height: 1.5;
+            margin-bottom: 10px; /* Add some spacing between sentences */
+        }
+
+        /* CSS styles for accuracy result */
+        #accuracy-result {
+            text-align: center;
+        }
+
+        #accuracy-result p {
+            font-size: 40px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<h1>Intermediate</h1>
+<!-- Correct sentence for comparison -->
+    
+<!-- Main Content -->
+<div class="container">
+    <!-- Create a container for the sentences -->
+    <div id="sentence-container">
+        <p>The repercussions of anthropogenic intervention in natural ecosystems are multifaceted. Biodiversity, the hallmark of thriving ecosystems, diminishes rapidly. Deforestation, habitat destruction, and pollution wreak havoc. Climate change, exacerbated by emissions, threatens ecological equilibrium. Irreplaceable species teeter on the brink of extinction. Oceans, repositories of life, are suffocated by plastic debris. Delicate ecosystems crumble under the weight of human actions. Reversing these trends demands concerted global effort.
+        </p>
+    </div>
+
+    <textarea id="user-input" contenteditable="true" placeholder="Type here..."></textarea>
+
+    <!-- Correct sentence for comparison -->
+    <p id="correct-sentence" style="color:#ffffff; font-size:1px;">The repercussions of anthropogenic intervention in natural ecosystems are multifaceted. Biodiversity, the hallmark of thriving ecosystems, diminishes rapidly. Deforestation, habitat destruction, and pollution wreak havoc. Climate change, exacerbated by emissions, threatens ecological equilibrium. Irreplaceable species teeter on the brink of extinction. Oceans, repositories of life, are suffocated by plastic debris. Delicate ecosystems crumble under the weight of human actions. Reversing these trends demands concerted global effort.
+    </p>
+    
+    <!-- Calculate accuracy button -->
+    <button id="calculate-accuracy">Calculate Accuracy</button>
+    
+    <!-- Display accuracy result here -->
+    <div id="accuracy-result">
+        <p id="accuracy-text"></p>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Sample correct sentence
+            var correctSentence = "The repercussions of anthropogenic intervention in natural ecosystems are multifaceted. Biodiversity, the hallmark of thriving ecosystems, diminishes rapidly. Deforestation, habitat destruction, and pollution wreak havoc. Climate change, exacerbated by emissions, threatens ecological equilibrium. Irreplaceable species teeter on the brink of extinction. Oceans, repositories of life, are suffocated by plastic debris. Delicate ecosystems crumble under the weight of human actions. Reversing these trends demands concerted global effort.";
+
+            // Get the "Calculate Accuracy" button element
+            var calculateButton = document.getElementById("calculate-accuracy");
+
+            // Event listener for the "Calculate Accuracy" button
+            calculateButton.addEventListener("click", function () {
+                // Get the user's typed text from the textarea
+                var userInput = document.getElementById("user-input").value;
+                
+                // Function to calculate accuracy
+                function calculateAccuracy(correctText, userText) {
+                    var correctWords = correctText.split(" ");
+                    var userWords = userText.split(" ");
+                    var correctWordCount = correctWords.length;
+                    var correctWordMatches = 0;
+
+                    for (var i = 0; i < correctWordCount; i++) {
+                        if (i < userWords.length && correctWords[i] === userWords[i]) {
+                            correctWordMatches++;
+                        }
+                    }
+
+                    return (correctWordMatches / correctWordCount) * 100;
+                }
+
+                // Calculate accuracy
+                var accuracy = calculateAccuracy(correctSentence, userInput);
+                
+                // Display the accuracy result
+                document.getElementById("accuracy-text").textContent = "Your accuracy: " + accuracy.toFixed(2) + "%";
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

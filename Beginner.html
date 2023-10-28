@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<!-- saved from url=(0040)file:///D:/Desktop/project/Beginner.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <title>Beginner</title>
+    <style>
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f6f8fa; /* GitHub-like background color */
+            color: #333; /* Text color */
+        }
+
+        h1 {
+            font-size: 36px;
+            color: white; /* Make sure to use a color code or name, e.g., #fff for white */
+            background-color: black;
+            text-align: center;
+            font-weight: bold;
+            font-family: Arial, sans-serif; /* Use a valid font family name */
+            padding: 20px;
+            border-radius: 5px;
+            border: 5px solid #c9d1d9;
+            margin-top: 2px;
+        }
+
+        /* CSS styles for the practice text area */
+        #user-input {
+            width: 100%;
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            background-color: #f6f8fa;
+            color: #333;
+            border-radius: 5px;
+        }
+
+        /* Main content container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            background-color: #fff; /* Content background color */
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+            border-radius: 5px; /* Rounded corners */
+        }
+       
+        #sentence-container   {
+           font-family:cursive;
+
+        /* CSS styles for result display */
+        #result-container {
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .wrong-word {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<h1>Beginner</h1>
+<!-- Correct sentence for comparison -->
+<p style="font-family: cursive;">Please, make sure that before you start your drill, you have to click the "start typing" button.</p>
+    
+<!-- Main Content -->
+<div class="container">
+    <!-- Create a container for the sentences -->
+    <div id="sentence-container">
+        <p>The repercussions of anthropogenic intervention in natural ecosystems are multifaceted. Biodiversity, the hallmark of thriving ecosystems, diminishes rapidly. Deforestation, habitat destruction, and pollution wreak havoc. Climate change, exacerbated by emissions, threatens ecological equilibrium. Irreplaceable species teeter on the brink of extinction. Oceans, repositories of life, are suffocated by plastic debris. Delicate ecosystems crumble under the weight of human actions. Reversing these trends demands concerted global effort.</p>
+    </div>
+
+    <textarea id="user-input" contenteditable="true" placeholder="Type here..."></textarea>
+
+    <!-- Start Typing button -->
+    <button id="start-typing" onclick="startTyping()">Start Typing</button>
+
+    <!-- Calculate Accuracy and Speed button -->
+    <button id="calculate-accuracy-speed" onclick="calculateAccuracyAndSpeed()" disabled="">Calculate Accuracy &amp; Speed</button>
+    
+    <!-- Display result here -->
+    <div id="result-container"></div>
+
+    <script>
+        var startTime = 0;
+        var endTime = 0;
+        var isTyping = false;
+
+        function startTyping() {
+            startTime = new Date().getTime();
+            isTyping = true;
+            document.getElementById("calculate-accuracy-speed").disabled = false;
+        }
+
+        function calculateAccuracyAndSpeed() {
+            if (isTyping) {
+                endTime = new Date().getTime();
+                var timeInSeconds = (endTime - startTime) / 1000;
+                var correctSentence = "The repercussions of anthropogenic intervention in natural ecosystems are multifaceted. Biodiversity, the hallmark of thriving ecosystems, diminishes rapidly. Deforestation, habitat destruction, and pollution wreak havoc. Climate change, exacerbated by emissions, threatens ecological equilibrium. Irreplaceable species teeter on the brink of extinction. Oceans, repositories of life, are suffocated by plastic debris. Delicate ecosystems crumble under the weight of human actions. Reversing these trends demands concerted global effort.";
+                var userInput = document.getElementById("user-input").value;
+                
+                var correctWords = correctSentence.split(" ");
+                var userWords = userInput.split(" ");
+                var correctWordCount = correctWords.length;
+                var correctWordMatches = 0;
+
+                for (var i = 0; i < correctWordCount; i++) {
+                    if (i < userWords.length && correctWords[i] === userWords[i]) {
+                        correctWordMatches++;
+                    }
+                }
+
+                var accuracy = (correctWordMatches / correctWordCount) * 100;
+
+                var charactersTyped = userInput.length;
+                var wpm = (charactersTyped / 5) / (timeInSeconds / 60);
+
+                var wrongWords = [];
+                for (var i = 0; i < correctWordCount; i++) {
+                    if (i < userWords.length && correctWords[i] !== userWords[i]) {
+                        wrongWords.push(i);
+                    }
+                }
+
+                var resultText = "Your accuracy: " + accuracy.toFixed(2) + "% | Your typing speed: " + Math.round(wpm) + " WPM<br>";
+                if (wrongWords.length > 0) {
+                    resultText += "<h2>Incorrect Words:</h2><table><tr><th>Index</th><th>Your Word</th><th>Correct Word</th></tr>";
+                    for (var i = 0; i < wrongWords.length; i++) {
+                        var wrongWordIndex = wrongWords[i];
+                        resultText += "<tr><td>" + wrongWordIndex + "</td><td class='wrong-word'>" + userWords[wrongWordIndex] + "</td><td>" + correctWords[wrongWordIndex] + "</td></tr>";
+                    }
+                    resultText += "</table>";
+                }
+
+                document.getElementById("result-container").innerHTML = resultText;
+            } else {
+                alert("Please start typing before calculating accuracy and speed.");
+            }
+        }
+    </script>
+</div>
+
+
+</body></html>
